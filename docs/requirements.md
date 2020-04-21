@@ -1,6 +1,5 @@
 <!-- TOC -->
-
-- [Prerequisites to Development and Test of Helm Charts](#prerequisites-to-development-and-test-of-helm-charts)
+- [Prerequisites to develop and test Helm Charts](#prerequisites-to-develop-and-test-helm-charts)  
   - [Kubernetes Cluster](#kubernetes-cluster)
   - [Install Docker-CE](#install-docker-ce)
   - [Install Kubectl](#install-kubectl)
@@ -11,12 +10,11 @@
 
 <!-- TOC -->
 
-# Prerequisites to Development and Test of Helm Charts
+# Prerequisites to develop and test Helm Charts
 
 ## Kubernetes Cluster
 
-
-You will need to create a Kubernetes cluster locally using [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube), [microk8s](https://microk8s.io), [kind](https://kind.sigs.k8s.io), [k3s](https://k3s.io) or other software.
+You will need to create a Kubernetes cluster locally using [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube), [microk8s](https://microk8s.io), [kind](https://kind.sigs.k8s.io), [k3s](https://k3s.io) or other tools.
 
 Or use Kubernetes cluster in [EKS](https://aws.amazon.com/eks), [GKE](https://cloud.google.com/kubernetes-engine), [AKS](https://docs.microsoft.com/en-us/azure/aks), [DOKS](https://www.digitalocean.com/products/kubernetes) or other cloud provider.
 
@@ -28,7 +26,6 @@ Follow instructions of page for install Docker-CE.
 * Debian: https://docs.docker.com/install/linux/docker-ce/debian/
 * CentOS: https://docs.docker.com/install/linux/docker-ce/centos/
 * MacOS: https://docs.docker.com/docker-for-mac/install/
-
 
 ## Install Kubectl
 
@@ -74,7 +71,7 @@ https://github.com/peelmicro/learn-devops-the-complete-kubernetes-course
 
 ## Install Helm 3
 
-Execute os seguintes comandos para instalar o helm3.
+Execute these commands to install helm 3.
 
 Documentation: https://helm.sh/docs/
 
@@ -115,52 +112,6 @@ exit
 Credits: Juan Pablo Perez - https://www.linkedin.com/in/juanpabloperezpeelmicro/ 
 
 https://github.com/peelmicro/learn-devops-the-complete-kubernetes-course
-
----
-
-
-## Install Sops
-
-Simple shell function for sops installation in Linux 64 bits.
-
-Sops documentation: https://github.com/mozilla/sops
-
-Copy and paste this code:
-
-```bash
-sudo su
-
-function install_sops {
-if [ -z $(which sops) ]; then
-    VERSION_SOPS=$(curl -s https://api.github.com/repos/mozilla/sops/releases/latest | grep tag_name | cut -d '"' -f 4)
-    curl -LO https://github.com/mozilla/sops/releases/download/$VERSION_SOPS/sops-$VERSION_SOPS.linux
-    mv sops-$VERSION_SOPS.linux /usr/local/bin/sops
-    chmod +x /usr/local/bin/sops
-else
-    echo "sops is most likely installed"
-fi
-}
-
-install_sops
-
-which sops
-
-sops --version
-
-exit
-```
-
-Create and configure the file sops: ``~/.sops.yaml`` with follow content.
-
-```bash
-creation_rules:
-  - kms: 'PATH_ARN_KEY_SYMMETRIC'
-    aws_profile: default
-```
-
-Where ``PATH_ARN_KEY_SYMMETRIC`` must be replaced with the symmetric key ARN created in AWS KMS services, as shown in the following example.
-
-![alt text](images/find-key-arn-new-new.png "PATH_ARN_KEY_SYMMETRIC")
 
 ---
 
@@ -264,4 +215,3 @@ Credits: Helm Doc Community
 
 * https://helm.sh/docs/intro/quickstart
 * https://helm.sh/docs/intro/using_helm
-
