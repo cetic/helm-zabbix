@@ -1,20 +1,19 @@
 <!-- TOC -->
 
-- [About](#about)
-- [Prerequisites to Development and Test of Helm Charts](#prerequisites-to-development-and-test-of-helm-charts)
-- [Example of Install Zabbix in Kubernetes](#example-of-install-zabbix-in-kubernetes)
+- [About](#about)cetic:master
+- [Prerequisites to develop and test Helm Charts](#prerequisites-to-develop-and-test-helm-charts)
+- [Example to install Zabbix in Kubernetes](#example-to-install-zabbix-in-kubernetes)
 
 <!-- TOC -->
 
 # About
 
-Section documentation of repository.
+Documentation section of this repository.
 
+# Prerequisites to develop and test Helm Charts
 
-# Prerequisites to Development and Test of Helm Charts
+Visit the [requirements.md](requirements.md) file.
 
-Visit the [requirements.md](./requirements.md) file.
+# Example to install Zabbix in Kubernetes
 
-# Example of Install Zabbix in Kubernetes
-
-Visit this [tutorial](./example/README.md).
+Visit this [tutorial](example/README.md).
