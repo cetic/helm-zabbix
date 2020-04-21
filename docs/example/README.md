@@ -1,33 +1,30 @@
 <!-- TOC -->
-
 - [About](#about)
-- [Prerequisites to Development and Test of Helm Charts](#prerequisites-to-development-and-test-of-helm-charts)
+- [Prerequisites to develop and test Helm Charts](#prerequisites-to-develop-and-test-helm-charts)
 - [How to Deploy Zabbix in Kubernetes](#how-to-deploy-zabbix-in-kubernetes)
-
 <!-- TOC -->
 
 # About
 
-This is only example for use the Helm Chart https://github.com/cetic/helm-zabbix. For mode informations see the [README.md](../../README.md) file.
+This page presents an example to use the [Zabbix Helm Chart](https://github.com/cetic/helm-zabbix). For more informations, see the [README.md](/README.md) file.
 
-
-# Prerequisites to Development and Test of Helm Charts
-
+# Prerequisites to develop and test Helm Charts
+ 
 Visit the [requirements.md](../requirements.md) file.
 
 # How to Deploy Zabbix in Kubernetes
 
-Create or access cluster Kubernetes and configure the kubectl.
+Create or access your Kubernetes cluster and configure the kubectl client.
 
 Install Helm 3 (Visit the [requirements.md](../requirements.md) file.).
 
-Install plugin Helm secrets.
+Install the plugin Helm secrets.
 
 ```bash
 helm plugin install https://github.com/futuresimple/helm-secrets
 ```
 
-Download and configure the parameters for deploy of Zabbix.
+Download and configure the parameters to deploy Zabbix.
 
 ```bash
 cd ~
@@ -50,7 +47,7 @@ helm secrets edit helm-zabbix/docs/example/minikube/secrets.yaml
 | postgresql.postgresqlPostgresPassword | rootpasswd     |
 | zabbixweb.POSTGRES_PASSWORD           | zabbix         |
 
-Download dependences charts.
+Download the dependences charts.
 
 ```bash
 helm repo add stable https://kubernetes-charts-incubator.storage.googleapis.com
@@ -64,13 +61,13 @@ List the namespaces of cluster.
 kubectl get namespaces
 ```
 
-Create the namespaces ``monitoring`` if not exists in cluster.
+Create the namespaces ``monitoring`` if it not exists in cluster.
 
 ```bash
 kubectl create namespace monitoring
 ```
 
-Deploy Zabbix in cluster Kubernetes.
+Deploy Zabbix in the Kubernetes cluster. (Update the YAML files paths if necessary)
 
 ```bash
 helm secrets upgrade zabbix \
