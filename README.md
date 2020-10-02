@@ -91,6 +91,8 @@ Install the Zabbix helm chart with a release name `my-release`:
 helm install --name my-release cetic/zabbix
 ```
 
+See the example of installation in minikube in this [tutorial](docs/example/README.md).
+
 See section [Basic Commands of Helm 3](#basic-commands-of-helm-3) for more information about commands of helm.
 
 # Uninstallation

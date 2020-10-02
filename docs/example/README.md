@@ -1,6 +1,5 @@
 <!-- TOC -->
 - [About](#about)
-- [Prerequisites to develop and test Helm Charts](#prerequisites-to-develop-and-test-helm-charts)
 - [How to Deploy Zabbix in Kubernetes](#how-to-deploy-zabbix-in-kubernetes)
 - [Install nginx-ingress for services internal Kubernetes cluster](#install-nginx-ingress-for-services-internal-kubernetes-cluster)
 <!-- TOC -->
@@ -9,13 +8,9 @@
 
 This page presents an example to use the [Zabbix Helm Chart](https://github.com/cetic/helm-zabbix). For more informations, see the [README.md](/README.md) file.
 
-# Prerequisites to develop and test Helm Charts
- 
-Visit the [requirements.md](../requirements.md) file.
-
 # How to Deploy Zabbix in Kubernetes
 
-Create or access your Kubernetes cluster and configure the kubectl client.
+Create or access your Kubernetes cluster and configure the ``kubectl``.
 
 Install Helm 3 (Visit the [requirements.md](../requirements.md) file.).
 
@@ -25,7 +20,7 @@ Install the plugin Helm secrets.
 helm plugin install https://github.com/futuresimple/helm-secrets
 ```
 
-Download and configure the parameters to deploy Zabbix.
+Clone this repository:
 
 ```bash
 cd ~
@@ -86,25 +81,25 @@ kubectl get pods -n monitoring
 View informations of pods.
 
 ```bash
-kubectl describe pods/NAME_POD -n monitoring
+kubectl describe pods/POD_NAME -n monitoring
 ```
 
 View all containers of pod.
 
 ```bash
-kubectl get pods NAME_POD -n monitoring -o jsonpath='{.spec.containers[*].name}*'
+kubectl get pods POD_NAME -n monitoring -o jsonpath='{.spec.containers[*].name}*'
 ```
 
 View the logs container of pods.
 
 ```bash
-kubectl logs -f pods/NAME_POD -c NAME_CONTAINER -n monitoring
+kubectl logs -f pods/POD_NAME-c CONTAINER_NAME -n monitoring
 ```
 
 Access prompt of container.
 
 ```bash
-kubectl exec -it pods/NAME_POD -c NAME_CONTAINER -n monitoring -- sh
+kubectl exec -it pods/POD_NAME -c CONTAINER_NAME -n monitoring -- sh
 ```
 
 View informations of service Zabbix.
@@ -131,7 +126,7 @@ helm delete zabbix -n monitoring
 
 # Install nginx-ingress for services internal Kubernetes cluster
 
-In the 'production' environment to allow external access to Zabbix installed on Kubernetes, you can configure ``nginx-ingress``, but there are other similar approaches that can be used. This was just a suggestion for users new to Kubernetes.
+In the **production** environment to allow external access to Zabbix installed on Kubernetes, you can configure ``nginx-ingress``, but there are other similar approaches that can be used. This was just a suggestion for users new to Kubernetes.
 
 More informations about ``nginx-ingress`` can be found in the following tutorials.
 
