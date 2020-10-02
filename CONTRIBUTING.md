@@ -1,12 +1,14 @@
 <!-- TOC -->
 
 - [Contributing](#contributing)
+- [About VSCode](#about-vscode)
 
 <!-- TOC -->
 
 # Contributing
 
 * Install the follow packages: ``git``, ``kubectl``, ``helm``, ``helm-docs``. See this [tutorial](docs/requirements.md).
+* [OPTIONAL] Configure authentication on your Github account to use the SSH protocol instead of HTTP. Watch this tutorial to learn how to set up: https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account
 * Create a fork this repository.
 * Clone the forked repository to your local system:
 
@@ -79,3 +81,20 @@ git push origin master
 
 Reference:
 * https://blog.scottlowe.org/2015/01/27/using-fork-branch-git-workflow/
+
+# About VSCode
+
+Use a IDE (Integrated Development Environment) or text editor of your choice. By default, the use of VSCode is recommended.
+
+VSCode (https://code.visualstudio.com), combined with the following plugins, helps the editing/review process, mainly allowing the preview of the content before the commit, analyzing the Markdown syntax and generating the automatic summary, as the section titles are created/changed.
+
+* Markdown-lint: https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint
+* Markdown-toc: https://marketplace.visualstudio.com/items?itemName=AlanWalk.markdown-toc
+* Markdown-all-in-one: https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one
+* Themes for VSCode:
+
+https://vscodethemes.com/
+
+https://code.visualstudio.com/docs/getstarted/themes
+
+https://dev.to/thegeoffstevens/50-vs-code-themes-for-2020-45cc
