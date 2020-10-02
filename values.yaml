@@ -26,6 +26,7 @@ zabbixServer:
     type: ClusterIP
     # zabbixServer.service.port -- Port of service in Kubernetes cluster
     port: 10051
+
 # **PostgreSQL** configurations
 postgresql:
   # postgresql.enabled -- Create a database using Postgresql
@@ -76,8 +77,8 @@ zabbixproxy:
   # ZBX_LOADMODULE: dummy1.so,dummy2.so # The variable is list of comma separated loadable Zabbix modules. It works with volume /var/lib/zabbix/modules.
   # The variable is used to specify debug level, from 0 to 5
   # ZBX_DEBUGLEVEL: 4
-  # zabbixproxy.ZBX_TIMEOUT -- The variable is used to specify timeout for processing checks. By default, value is 4.
-  ZBX_TIMEOUT: 4
+  # The variable is used to specify timeout for processing checks. By default, value is 4.
+  #ZBX_TIMEOUT: 4
   # zabbixproxy.ZBX_JAVAGATEWAY_ENABLE -- The variable enable communication with Zabbix Java Gateway to collect Java related checks. By default, value is false.
   ZBX_JAVAGATEWAY_ENABLE: false
   # zabbixproxy.ZBX_VMWARECACHESIZE -- Cache size
@@ -118,10 +119,10 @@ zabbixagent:
   # ZBX_ACTIVESERVERS:
   # The variable is list of comma separated loadable Zabbix modules. It works with volume /var/lib/zabbix/modules.
   # ZBX_LOADMODULE: dummy1.so,dummy2.so
-  # zabbixagent.ZBX_DEBUGLEVEL -- The variable is used to specify debug level, from 0 to 5
-  ZBX_DEBUGLEVEL: 3
-  # zabbixagent.ZBX_TIMEOUT -- The variable is used to specify timeout for processing checks. By default, value is 4.
-  ZBX_TIMEOUT: 4
+  # The variable is used to specify debug level, from 0 to 5
+  #ZBX_DEBUGLEVEL: 3
+  # The variable is used to specify timeout for processing checks. By default, value is 4.
+  #ZBX_TIMEOUT: 4
   # zabbixagent.ZBX_JAVAGATEWAY_ENABLE -- The variable enable communication with Zabbix Java Gateway to collect Java related checks. By default, value is false.
   ZBX_JAVAGATEWAY_ENABLE: false
   # zabbixagent.ZBX_VMWARECACHESIZE -- Cache size
@@ -165,7 +166,7 @@ zabbixweb:
     # zabbixweb.service.port -- Port to expose service
     port: 80
     # zabbixweb.service.targetPort -- Port of application pod
-    targetPort: 80
+    targetPort: 8080
 
 # Ingress configurations
 ingress:
@@ -193,13 +194,34 @@ ingress:
 # requests:
 #   cpu: 100m
 #   memory: 128Mi```
-resources: {}
 
-# livenessProbe -- Liveness Probe settings
-livenessProbe: {}
+livenessProbe:
+  # livenessProbe.path -- Path of health check of application
+  path: /
+  # livenessProbe.initialDelaySeconds -- Number of seconds after the container has started before liveness
+  initialDelaySeconds: 30
+  # livenessProbe.periodSeconds -- Specifies that the kubelet should perform a liveness probe every N seconds
+  periodSeconds: 10
+  # livenessProbe.timeoutSeconds -- Number of seconds after which the probe times out
+  timeoutSeconds: 5
+  # livenessProbe.failureThreshold -- When a probe fails, Kubernetes will try failureThreshold times before giving up. Giving up in case of liveness probe means restarting the container. In case of readiness probe the Pod will be marked Unready
+  failureThreshold: 6
+  # livenessProbe.successThreshold -- Minimum consecutive successes for the probe to be considered successful after having failed
+  successThreshold: 1
 
-# readinessProbe -- Rediness Probe settings
-readinessProbe: {}
+readinessProbe:
+  # readinessProbe.path -- Path of health check of application
+  path: /
+  # readinessProbe.initialDelaySeconds -- Number of seconds after the container has started before readiness
+  initialDelaySeconds: 5
+  # readinessProbe.periodSeconds -- Specifies that the kubelet should perform a readiness probe every N seconds
+  periodSeconds: 10
+  # readinessProbe.timeoutSeconds -- Number of seconds after which the probe times out
+  timeoutSeconds: 5
+  # readinessProbe.failureThreshold -- When a probe fails, Kubernetes will try failureThreshold times before giving up. Giving up in case of liveness probe means restarting the container. In case of readiness probe the Pod will be marked Unready
+  failureThreshold: 6
+  # readinessProbe.successThreshold-- Minimum consecutive successes for the probe to be considered successful after having failed
+  successThreshold: 1
 
 # nodeSelector -- nodeSelector configurations
 nodeSelector: {}

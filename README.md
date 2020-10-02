@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/cetic/helm-zabbix.svg?style=svg)](https://circleci.com/gh/cetic/helm-zabbix/tree/master) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![version](https://img.shields.io/github/tag/cetic/helm-zabbix.svg?label=release)
 
- ![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square)
+ ![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square)
 
 Zabbix is a mature and effortless enterprise-class open source monitoring solution for network monitoring and application monitoring of millions of metrics.
 
@@ -85,6 +85,12 @@ Update the list helm chart available for installation (like ``apt-get update``).
 helm repo update
 ```
 
+Install dependences of ``helm-zabbix`` chart:
+
+```bash
+helm dependency update
+```
+
 Install the Zabbix helm chart with a release name `my-release`:
 
 ```bash
@@ -105,7 +111,7 @@ helm delete my-release
 
 # How to access Zabbix
 
-After deploying the chart in your cluster, yu can use the following command to access the zabbix frontend service:
+After deploying the chart in your cluster, you can use the following command to access the zabbix frontend service:
 
 ```bash
 minikube service <release-name>-zabbix-web
@@ -235,15 +241,24 @@ The following tables lists the configurable parameters of the chart and their de
 | ingress.enabled | bool | `false` | Enables Ingress |
 | ingress.hosts | list | `[{"host":null,"paths":[]}]` | Ingress hosts |
 | ingress.tls | list | `[]` | Ingress TLS configuration |
-| livenessProbe | object | `{}` | Liveness Probe settings |
+| livenessProbe.failureThreshold | int | `6` | When a probe fails, Kubernetes will try failureThreshold times before giving up. Giving up in case of liveness probe means restarting the container. In case of readiness probe the Pod will be marked Unready |
+| livenessProbe.initialDelaySeconds | int | `30` | Number of seconds after the container has started before liveness |
+| livenessProbe.path | string | `"/"` | Path of health check of application |
+| livenessProbe.periodSeconds | int | `10` | Specifies that the kubelet should perform a liveness probe every N seconds |
+| livenessProbe.successThreshold | int | `1` | Minimum consecutive successes for the probe to be considered successful after having failed |
+| livenessProbe.timeoutSeconds | int | `5` | Number of seconds after which the probe times out |
 | nodeSelector | object | `{}` | nodeSelector configurations |
 | postgresql.enabled | bool | `true` | Create a database using Postgresql |
 | postgresql.postgresqlDatabase | string | `"zabbix"` | Name of database |
 | postgresql.postgresqlPassword | string | `"zabbix_pwd"` | Password of database |
 | postgresql.postgresqlPostgresPassword | string | `"zabbix_pwd"` | Password of``postgres`` user in Postgresql |
 | postgresql.postgresqlUsername | string | `"zabbix"` | User of database |
-| readinessProbe | object | `{}` | Rediness Probe settings |
-| resources | object | `{}` | We usually recommend not to specify default resources and to leave this as a conscious choice for the user. This also increases chances charts run on environments with little resources, such as Minikube. If you do want to specify resources, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'resources:'. ```limits:   cpu: 100m   memory: 128Mi requests:   cpu: 100m   memory: 128Mi``` |
+| readinessProbe.failureThreshold | int | `6` | When a probe fails, Kubernetes will try failureThreshold times before giving up. Giving up in case of liveness probe means restarting the container. In case of readiness probe the Pod will be marked Unready |
+| readinessProbe.initialDelaySeconds | int | `5` | Number of seconds after the container has started before readiness |
+| readinessProbe.path | string | `"/"` | Path of health check of application |
+| readinessProbe.periodSeconds | int | `10` | Specifies that the kubelet should perform a readiness probe every N seconds |
+| readinessProbe.successThreshold | int | `1` |  |
+| readinessProbe.timeoutSeconds | int | `5` | Number of seconds after which the probe times out |
 | tolerations | list | `[]` | Tolerations configurations |
 | zabbixServer.DB_SERVER_HOST | string | `"zabbix-postgresql"` | Address of database host |
 | zabbixServer.POSTGRES_DB | string | `"zabbix"` | Name of database |
@@ -256,14 +271,12 @@ The following tables lists the configurable parameters of the chart and their de
 | zabbixServer.service.port | int | `10051` | Port of service in Kubernetes cluster |
 | zabbixServer.service.type | string | `"ClusterIP"` | Type of service in Kubernetes cluster |
 | zabbixagent.ZBX_ACTIVE_ALLOW | bool | `true` | This variable is boolean (true or false) and enables or disables feature of active checks |
-| zabbixagent.ZBX_DEBUGLEVEL | int | `3` | The variable is used to specify debug level, from 0 to 5 |
 | zabbixagent.ZBX_HOSTNAME | string | `"zabbix-agent"` | Zabbix agent hostname Case sensitive hostname |
 | zabbixagent.ZBX_JAVAGATEWAY_ENABLE | bool | `false` | The variable enable communication with Zabbix Java Gateway to collect Java related checks. By default, value is false. |
 | zabbixagent.ZBX_PASSIVESERVERS | string | `"127.0.0.1"` | The variable is comma separated list of allowed Zabbix server or proxy hosts for connections to Zabbix agent container. |
 | zabbixagent.ZBX_PASSIVE_ALLOW | bool | `true` | This variable is boolean (true or false) and enables or disables feature of passive checks. By default, value is true |
 | zabbixagent.ZBX_SERVER_HOST | string | `"127.0.0.1"` | Zabbix server host |
 | zabbixagent.ZBX_SERVER_PORT | int | `10051` | Zabbix server port |
-| zabbixagent.ZBX_TIMEOUT | int | `4` | The variable is used to specify timeout for processing checks. By default, value is 4. |
 | zabbixagent.ZBX_VMWARECACHESIZE | string | `"128M"` | Cache size |
 | zabbixagent.enabled | bool | `true` | Enables use of Zabbix agent |
 | zabbixagent.image.pullPolicy | string | `"IfNotPresent"` | Pull policy of Docker image |
@@ -282,7 +295,6 @@ The following tables lists the configurable parameters of the chart and their de
 | zabbixproxy.ZBX_PROXYMODE | int | `0` | The variable allows to switch Zabbix proxy mode. Bu default, value is 0 - active proxy. Allowed values are 0 and 1. |
 | zabbixproxy.ZBX_SERVER_HOST | string | `"zabbix-server"` | Zabbix server host |
 | zabbixproxy.ZBX_SERVER_PORT | int | `10051` | Zabbix server port |
-| zabbixproxy.ZBX_TIMEOUT | int | `4` | The variable is used to specify timeout for processing checks. By default, value is 4. |
 | zabbixproxy.ZBX_VMWARECACHESIZE | string | `"128M"` | Cache size |
 | zabbixproxy.enabled | bool | `false` | Enables use of **Zabbix proxy** |
 | zabbixproxy.image.pullPolicy | string | `"IfNotPresent"` | Pull policy of Docker image |
@@ -303,5 +315,5 @@ The following tables lists the configurable parameters of the chart and their de
 | zabbixweb.image.repository | string | `"zabbix/zabbix-web-apache-pgsql"` | Zabbix web Docker image name |
 | zabbixweb.image.tag | string | `"ubuntu-4.4.5"` | Tag of Docker image of Zabbix web |
 | zabbixweb.service.port | int | `80` | Port to expose service |
-| zabbixweb.service.targetPort | int | `80` | Port of application pod |
+| zabbixweb.service.targetPort | int | `8080` | Port of application pod |
 | zabbixweb.service.type | string | `"NodePort"` | Type of service for Zabbix web |

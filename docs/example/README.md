@@ -14,12 +14,6 @@ Create or access your Kubernetes cluster and configure the ``kubectl``.
 
 Install Helm 3 (Visit the [requirements.md](../requirements.md) file.).
 
-Install the plugin Helm secrets.
-
-```bash
-helm plugin install https://github.com/futuresimple/helm-secrets
-```
-
 Clone this repository:
 
 ```bash
@@ -29,26 +23,18 @@ git clone https://github.com/cetic/helm-zabbix
 
 Edit ``helm-zabbix/docs/example/minikube/values.yaml`` file.
 
-Edit ``helm-zabbix/docs/example/minikube/secrets.yaml`` file with follow command or create your file of secrets and encrypt with ``helm secrets enc PATH_FILE_SECRETS`` command (see https://github.com/zendesk/helm-secrets). Where ``PATH_FILE_SECRETS`` must be replaced with the path to your new secrets file.
-
-```bash
-helm secrets edit helm-zabbix/docs/example/minikube/secrets.yaml
-```
-
-| Properties in secret.yaml file        | Default Values |
-|:--------------------------------------|:---------------|
-| zabbixServer.POSTGRES_PASSWORD        | zabbix         |
-| zabbixproxy.MYSQL_PASSWORD            | zabbix         |
-| postgresql.postgresqlPassword         | zabbix         |
-| postgresql.postgresqlPostgresPassword | rootpasswd     |
-| zabbixweb.POSTGRES_PASSWORD           | zabbix         |
-
 Download the dependences charts.
 
 ```bash
 helm repo add stable https://kubernetes-charts-incubator.storage.googleapis.com
 helm repo add cetic https://cetic.github.io/helm-charts
 helm repo update
+```
+
+Install dependences of ``helm-zabbix`` chart:
+
+```bash
+helm dependency update
 ```
 
 List the namespaces of cluster.
@@ -66,10 +52,9 @@ kubectl create namespace monitoring
 Deploy Zabbix in the Kubernetes cluster. (Update the YAML files paths if necessary).
 
 ```bash
-helm secrets upgrade zabbix \
+helm install zabbix \
  -f ~/helm-zabbix/docs/example/minikube/values.yaml \
- -f ~/helm-zabbix/docs/example/minikube/secrets.yaml \
- cetic/zabbix -n monitoring --install
+ cetic/zabbix -n monitoring
 ```
 
 View the pods.
@@ -110,10 +95,10 @@ kubectl get pods --output=wide -n monitoring
 kubectl describe services zabbix -n monitoring
 ```
 
-Listen on port 8888 locally, forwarding to 80 in the pod.
+Listen on port 8888 locally, forwarding to 80 in the service ``zabbix-web``.
 
 ```bash
-kubectl port-forward deployment/zabbix-web 8888:80 -n monitoring
+kubectl port-forward service/zabbix-web 8888:80 -n monitoring
 ```
 
 Access Zabbix in http://localhost:8888. Login ``Admin`` and password ``zabbix``.

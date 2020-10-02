@@ -85,6 +85,12 @@ Update the list helm chart available for installation (like ``apt-get update``).
 helm repo update
 ```
 
+Install dependences of ``helm-zabbix`` chart:
+
+```bash
+helm dependency update
+```
+
 Install the Zabbix helm chart with a release name `my-release`:
 
 ```bash
@@ -105,7 +111,7 @@ helm delete my-release
 
 # How to access Zabbix
 
-After deploying the chart in your cluster, yu can use the following command to access the zabbix frontend service: 
+After deploying the chart in your cluster, you can use the following command to access the zabbix frontend service: 
 
 ```bash
 minikube service <release-name>-zabbix-web
