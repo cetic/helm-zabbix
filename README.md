@@ -181,6 +181,8 @@ The following tables lists the configurable parameters of the chart and their de
 | zabbixServer.replicaCount | int | `1` | Number of replicas of ``zabbixServer`` module |
 | zabbixServer.service.port | int | `10051` | Port of service in Kubernetes cluster |
 | zabbixServer.service.type | string | `"ClusterIP"` | Type of service in Kubernetes cluster |
+| zabbixServer.hostPort | bool | `false` | open hostPort on node where Zabbix server deployed |
+| zabbixServer.hostIP | string | `0.0.0.0` | in case of multiple IPs on node restrict hostPort to given IP | 
 | zabbixagent.ZBX_ACTIVE_ALLOW | bool | `true` | This variable is boolean (true or false) and enables or disables feature of active checks |
 | zabbixagent.ZBX_HOSTNAME | string | `"zabbix-agent"` | Zabbix agent hostname Case sensitive hostname |
 | zabbixagent.ZBX_JAVAGATEWAY_ENABLE | bool | `false` | The variable enable communication with Zabbix Java Gateway to collect Java related checks. By default, value is false. |
