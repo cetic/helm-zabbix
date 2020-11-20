@@ -29,8 +29,16 @@ spec:
           ports:
             - containerPort: 10051
               name: zabbix-trapper
+              hostPort: 10051
+              {{- if ne "0.0.0.0" .Values.zabbixServer.hostIP }}
+              hostIP: {{ .Values.zabbixServer.hostIP }}
+              {{- end}}    
             - containerPort: 10052
               name: zabbix-jmx
+              hostPort: 10052              
+              {{- if ne "0.0.0.0" .Values.zabbixServer.hostIP }}
+              hostIP: {{ .Values.zabbixServer.hostIP }}
+              {{- end}}    
           env:
             - name: DB_SERVER_HOST
               value: {{ .Values.zabbixServer.DB_SERVER_HOST }}

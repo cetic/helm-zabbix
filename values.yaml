@@ -6,6 +6,8 @@
 zabbixServer:
   # zabbixServer.replicaCount -- Number of replicas of ``zabbixServer`` module
   replicaCount: 1
+  # optional set hostIP different from 0.0.0.0 open a port direct on node where zabbix server runs
+  hostIP: 0.0.0.0
   image:
     # zabbixServer.image.repository -- Zabbix server Docker image name
     repository: zabbix/zabbix-server-pgsql
