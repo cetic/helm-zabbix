@@ -34,6 +34,8 @@ spec:
           env:
             - name: DB_SERVER_HOST
               value: {{ .Values.zabbixServer.DB_SERVER_HOST }}
+            - name: DB_SERVER_PORT
+              value: {{ .Values.zabbixServer.DB_SERVER_PORT | quote }}
             - name: POSTGRES_USER
               value: {{ .Values.zabbixServer.POSTGRES_USER }}
             - name: POSTGRES_PASSWORD

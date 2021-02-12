@@ -172,6 +172,7 @@ The following tables lists the configurable parameters of the chart and their de
 | readinessProbe.timeoutSeconds | int | `5` | Number of seconds after which the probe times out |
 | tolerations | list | `[]` | Tolerations configurations |
 | zabbixServer.DB_SERVER_HOST | string | `"zabbix-postgresql"` | Address of database host |
+| zabbixServer.DB_SERVER_PORT | string | `5432` | Address of database host |
 | zabbixServer.POSTGRES_DB | string | `"zabbix"` | Name of database |
 | zabbixServer.POSTGRES_PASSWORD | string | `"zabbix_pwd"` | Password of database |
 | zabbixServer.POSTGRES_USER | string | `"zabbix"` | User of database |
