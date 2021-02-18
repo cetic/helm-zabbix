@@ -1,6 +1,6 @@
 # Helm Chart For Zabbix.
 
-[![CircleCI](https://circleci.com/gh/cetic/helm-zabbix.svg?style=svg)](https://circleci.com/gh/cetic/helm-zabbix/tree/master) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![version](https://img.shields.io/github/tag/cetic/helm-zabbix.svg?label=release) ![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square)
+[![CircleCI](https://circleci.com/gh/cetic/helm-zabbix.svg?style=svg)](https://circleci.com/gh/cetic/helm-zabbix/tree/master) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![version](https://img.shields.io/github/tag/cetic/helm-zabbix.svg?label=release) ![Version: 0.3.1](https://img.shields.io/badge/Version-0.3.1-informational?style=flat-square)
 
 Zabbix is a mature and effortless enterprise-class open source monitoring solution for network monitoring and application monitoring of millions of metrics.
 
@@ -34,7 +34,7 @@ The server performs the polling and trapping of data, it calculates triggers, se
 
 **Zabbix web** interface is a part of Zabbix software. It is used to manage resources under monitoring and view monitoring statistics.
 
-## Zabbix Proxy
+## Zabbix Proxy 
 
 > **Zabbix proxy** is not functional in this helm chart, yet.
 
@@ -121,7 +121,7 @@ helm delete zabbix -n monitoring
 
 # How to access Zabbix
 
-After deploying the chart in your cluster, you can use the following command to access the zabbix frontend service:
+After deploying the chart in your cluster, you can use the following command to access the zabbix frontend service: 
 
 View informations of ``zabbix`` services.
 
@@ -175,14 +175,14 @@ The following tables lists the configurable parameters of the chart and their de
 | zabbixServer.POSTGRES_DB | string | `"zabbix"` | Name of database |
 | zabbixServer.POSTGRES_PASSWORD | string | `"zabbix_pwd"` | Password of database |
 | zabbixServer.POSTGRES_USER | string | `"zabbix"` | User of database |
+| zabbixServer.hostIP | string | `"0.0.0.0"` | optional set hostIP different from 0.0.0.0 to open port only on this IP |
+| zabbixServer.hostPort | bool | `false` | optional set true open a port direct on node where zabbix server runs  |
 | zabbixServer.image.pullPolicy | string | `"IfNotPresent"` | Pull policy of Docker image |
 | zabbixServer.image.repository | string | `"zabbix/zabbix-server-pgsql"` | Zabbix server Docker image name |
 | zabbixServer.image.tag | string | `"ubuntu-5.0.4"` | Tag of Docker image of Zabbix server |
 | zabbixServer.replicaCount | int | `1` | Number of replicas of ``zabbixServer`` module |
 | zabbixServer.service.port | int | `10051` | Port of service in Kubernetes cluster |
 | zabbixServer.service.type | string | `"ClusterIP"` | Type of service in Kubernetes cluster |
-| zabbixServer.hostPort | bool | `false` | open hostPort on node where Zabbix server deployed |
-| zabbixServer.hostIP | string | `0.0.0.0` | in case of multiple IPs on node restrict hostPort to given IP | 
 | zabbixagent.ZBX_ACTIVE_ALLOW | bool | `true` | This variable is boolean (true or false) and enables or disables feature of active checks |
 | zabbixagent.ZBX_HOSTNAME | string | `"zabbix-agent"` | Zabbix agent hostname Case sensitive hostname |
 | zabbixagent.ZBX_JAVAGATEWAY_ENABLE | bool | `false` | The variable enable communication with Zabbix Java Gateway to collect Java related checks. By default, value is false. |

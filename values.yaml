@@ -6,9 +6,9 @@
 zabbixServer:
   # zabbixServer.replicaCount -- Number of replicas of ``zabbixServer`` module
   replicaCount: 1
-  # optional set true open a port direct on node where zabbix server runs 
+  # zabbixServer.hostPort -- optional set true open a port direct on node where zabbix server runs 
   hostPort: false
-  # optional set hostIP different from 0.0.0.0 to open port only on this IP
+  # zabbixServer.hostIP -- optional set hostIP different from 0.0.0.0 to open port only on this IP
   hostIP: 0.0.0.0
   image:
     # zabbixServer.image.repository -- Zabbix server Docker image name
