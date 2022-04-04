@@ -74,6 +74,28 @@ spec:
             - name: {{ $item.name }}
               value: {{ $item.value | quote }}
             {{- end }}
+          volumeMounts:
+            {{- range $item := .Values.zabbixproxy.volumeMounts }}
+            - name: {{ $item.name | quote }}
+              mountPath: {{ $item.mountPath | quote }}
+            {{- end }}
+            {{- range $item := .Values.zabbixproxy.secretMounts }}
+            - name: {{ $item.name | quote }}
+              mountPath: {{ $item.mountPath | quote }}
+              readOnly: true
+            {{- end }}
+      volumes:
+        {{- range $item := .Values.zabbixproxy.volumeMounts }}
+        - name: {{ $item.name | quote }}
+          persistentVolumeClaim:
+            claimName: {{ $item.name | quote }}
+        {{- end }}
+        {{- range $item := .Values.zabbixproxy.secretMounts }}
+        - name: {{ $item.name | quote }}
+          secret:
+            secretName: {{ $item.name | quote }}
+            optional: false
+        {{- end }}
         {{- if .Values.zabbixagent.enabled }}
         - name: zabbix-agent
           resources:

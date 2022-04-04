@@ -110,6 +110,28 @@ spec:
             - name: zabbix-proxy
               containerPort: 10051
               protocol: TCP
+          volumeMounts:
+            {{- range $item := .Values.zabbixproxy.volumeMounts }}
+            - name: {{ $item.name | quote }}
+              mountPath: {{ $item.mountPath | quote }}
+            {{- end }}
+            {{- range $item := .Values.zabbixproxy.secretMounts }}
+            - name: {{ $item.name | quote }}
+              mountPath: {{ $item.mountPath | quote }}
+              readOnly: true
+            {{- end }}
+      volumes:
+        {{- range $item := .Values.zabbixproxy.volumeMounts }}
+        - name: {{ $item.name | quote }}
+          persistentVolumeClaim:
+            claimName: {{ $item.name | quote }}
+        {{- end }}
+        {{- range $item := .Values.zabbixproxy.secretMounts }}
+        - name: {{ $item.name | quote }}
+          secret:
+            secretName: {{ $item.name | quote }}
+            optional: false
+        {{- end }}
       imagePullSecrets:
       {{- range .Values.zabbixagent.image.pullSecrets }}
         - name: {{ . | quote }}
