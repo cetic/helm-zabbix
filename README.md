@@ -246,6 +246,9 @@ The following tables lists the configurable parameters of the chart and their de
 | postgresql.service.clusterIP | string | `nil` | Cluster IP for Zabbix server |
 | postgresql.service.port | int | `5432` | Port of service in Kubernetes cluster |
 | postgresql.service.type | string | `"ClusterIP"` | Type of service in Kubernetes cluster |
+| postgresql.config_file | string | `"/var/lib/postgresql/data/pgdata/postgresql.conf"` | The configuration file for postgres ([Review section "Database Configuration" of the image description](https://hub.docker.com/_/postgres)) |
+| postgresql.extraVolumes | list | `[]` | Add extra volumes (i.e. for a custom postgresql configuration) |
+| postgresql.extraVolumeMounts | list | `[]` | Add extra volumes mounts (i.e. for a custom postgresql configuration) |
 | readinessProbe.failureThreshold | int | `6` | When a probe fails, Kubernetes will try failureThreshold times before giving up. Giving up in case of liveness probe means restarting the container. In case of readiness probe the Pod will be marked Unready |
 | readinessProbe.initialDelaySeconds | int | `5` | Number of seconds after the container has started before readiness |
 | readinessProbe.path | string | `"/"` | Path of health check of application |

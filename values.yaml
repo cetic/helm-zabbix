@@ -128,6 +128,9 @@ postgresql:
     # metallb.universe.tf/address-pool: production-public-ips
   # -- Extra environment variables. A list of additional environment variables.
   extraEnv: []
+  extraVolumes: []
+  extraVolumeMounts: []
+  config_file: "/var/lib/postgresql/data/pgdata/postgresql.conf"
 
 # **Zabbix Proxy** configurations
 zabbixproxy:
